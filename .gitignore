@@ -1,0 +1,14 @@
+cat << 'EOF' > .gitignore
+.DS_Store
+*~
+*.tmp
+
+# VS Code
+.vscode/
+
+# Prevenção de segurança (Chaves e Credenciais AWS)
+*.pem
+*.cer
+*.key
+.aws/
+EOF

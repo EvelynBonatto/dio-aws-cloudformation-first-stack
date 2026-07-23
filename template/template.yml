@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  DIO - Minha Primeira Stack AWS CloudFormation.
+  Cria uma instancia EC2 (computacao) e um Bucket S3 (armazenamento).
+
+Parameters:
+  InstanceTypeParam:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t3.micro
+    Description: Tipo da instancia EC2
+
+Resources:
+  # --- Instância EC2 ---
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceTypeParam
+      ImageId: ami-0c101f26f147fa7fd # Amazon Linux 2023 (us-east-1)
+      Tags:
+        - Key: Name
+          Value: DIO-EC2-Instance
+
+  # --- Bucket S3 ---
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Name
+          Value: dio-s3-evelynbonatto
+
+Outputs:
+  EC2InstanceId:
+    Description: ID da instancia EC2 criada
+    Value: !Ref MyEC2Instance
+
+  S3BucketName:
+    Description: Nome do Bucket S3 criado
+    Value: !Ref MyS3Bucket
